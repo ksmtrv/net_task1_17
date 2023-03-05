@@ -59,30 +59,56 @@ namespace net_task_1_17
            
         }
 
-
-        private void button2_Click_1(object sender, EventArgs e)
+        private int[,] parseMatrix()
         {
-            int[] vector = new int[dataGridView1.RowCount];
+            int[,] array = new int[dataGridView1.RowCount, dataGridView1.ColumnCount];
             for (int i = 0; i < dataGridView1.RowCount; i++)
             {
-                vector[i] = Math.Abs(int.Parse("" + dataGridView1[0, i].Value));
                 for (int j = 0; j < dataGridView1.ColumnCount; j++)
                 {
+                    array[i, j] = int.Parse("" + dataGridView1[j, i].Value);
 
-                    if (Math.Abs(vector[i]) >= Math.Abs(int.Parse("" + dataGridView1[j, i].Value)))
+                }
+            }
+            return array;
+        }
+
+        private int[] findMinByRow(int[,] array)
+        {
+            int[] vector = new int[array.GetLength(0)];
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                vector[i] = array[i, 0];
+                for (int j = 1; j < array.GetLength(1); j++)
+                {
+
+                    if (Math.Abs(vector[i]) >= Math.Abs(array[i, j]))
                     {
-                        vector[i] = int.Parse("" + dataGridView1[j, i].Value);
+                        vector[i] = array[i, j];
                     }
                 }
             }
+            return vector;
+        }
 
-            dataGridView2.TopLeftHeaderCell.Value = "Вектор";
-            dataGridView2.ColumnCount = vector.Length;
-            for (int i = 0; i < dataGridView1.RowCount; i++)
+        private void fileOutput(int[,] array, int[] vector)
+        {
+            for (int i = 0; i < array.GetLength(0); i++)
             {
                 dataGridView2.Rows[0].Cells[i].Value = vector[i].ToString();
             }
+        }
 
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            int[,]array = parseMatrix();
+
+            int[] vector = findMinByRow((int[,])array);
+
+            dataGridView2.TopLeftHeaderCell.Value = "Вектор";
+            dataGridView2.ColumnCount = vector.Length;
+
+            fileOutput(array, vector);
 
         }
 
