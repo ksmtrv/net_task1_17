@@ -19,41 +19,37 @@ namespace net_task_1_17
 
         private void button1_Click(object sender, EventArgs e)
         {
-            try
+            if (int.TryParse(textBox1.Text, out int i)) 
             {
-                int s = Convert.ToInt32(textBox1.Text);
-
-                dataGridView1.RowCount = s;
-                dataGridView1.ColumnCount = s;
-
-                dataGridView1.TopLeftHeaderCell.Value = "Матрица";
-
-                Random rnd = new Random();
-
-                for (int i = 0; i < s; i++)
-                {
-                    for (int j = 0; j < s; j++)
-                    {
-                        dataGridView1.Rows[j].Cells[i].Value = rnd.Next(-50, 50);
-
-                    }
-                    dataGridView1.Rows[i].HeaderCell.Value = System.Convert.ToString(i + 1);
-                    dataGridView1.Columns[i].HeaderCell.Value = System.Convert.ToString(i + 1);
-                }
-            } catch
-            {
-                MessageBox.Show("Не задан размер матрицы");
+                generateMatrix(int.Parse(textBox1.Text));
             }
+        }
 
+        private void generateMatrix(int n)
+        {
+            dataGridView1.RowCount = n;
+            dataGridView1.ColumnCount = n;
 
+            dataGridView1.TopLeftHeaderCell.Value = "Матрица";
 
+            Random rnd = new Random();
+
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    dataGridView1.Rows[j].Cells[i].Value = rnd.Next(-50, 50);
+
+                }
+                dataGridView1.Rows[i].HeaderCell.Value = System.Convert.ToString(i + 1);
+                dataGridView1.Columns[i].HeaderCell.Value = System.Convert.ToString(i + 1);
+            }
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
-
         private void Form1_Load(object sender, EventArgs e)
         {
            
